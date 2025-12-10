@@ -77,3 +77,11 @@ for i in range(len(matriz)):
         else:
             print('*',end=' ')
     print()
+print("--- con siclos 2 ---")
+for i in range(len(matriz)):
+    for j in range(len(matriz[i])):
+        if i + j == len(matriz) -1:
+            print(matriz[i][j],end=' ')
+        else:
+            print('*',end=' ')
+    print()
