@@ -1,0 +1,72 @@
+:root {
+    --rojo: #8a0f0f;
+    --rojo-oscuro: #640b0b;
+    --gris: #f5f7f9;
+    --texto: #1a1a1a;
+  }
+  
+  /* General */
+  body {
+    color: var(--texto);
+    margin-top: 70px; /* espacio para navbar fija */
+  }
+  
+  /* Botón personalizado */
+  .btn-rojo {
+    background: var(--rojo);
+    color: #fff;
+  }
+  .btn-rojo:hover {
+    background: var(--rojo-oscuro);
+    color: #fff;
+  }
+  
+  /* Secciones */
+  .section-title {
+    font-weight: 700;
+    border-left: 5px solid var(--rojo);
+    padding-left: .5rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Hero */
+  .hero-slide img {
+    height: 70vh;
+    object-fit: cover;
+  }
+  .carousel-caption {
+    background: rgba(0,0,0,0.5);
+    padding: 1rem;
+    border-radius: .5rem;
+  }
+  
+  /* Productos */
+  .product-card img {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Footer */
+  footer {
+    font-size: .9rem;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .carousel-caption {
+      font-size: .9rem;
+      padding: .5rem;
+    }
+    .hero-slide img {
+      height: 50vh;
+    }
+    .section-title {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 1rem;
+    }   
+}

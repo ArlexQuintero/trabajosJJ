@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="registro.jsp" method="post">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        name="entrada_nombre"
+        id="entrada_nombre"
+        required
+        pattern="[A-Za-z]{3,50}" title="el nombre debe de tener solo letras y estar entre el rango de 3 a 50 "
+        placeholder="Nombre"
+      />
+      <label for="apellido">Apellido</label>
+      <input
+        type="text"
+        name="entrada_apellido"
+        id="entrada_apellido"
+        required
+        pattern="[A-Za-z]{3,50}" title="el apellido debe de tener solo letras y estar entre el rango de 3 a 50 "
+        placeholder="Apellido"
+      />
+      <label for="phone">Celular:</label>
+      <input type="number" name="telefono" id="telefonon" required placeholder="Celular" pattern="[0-9]{3,10}" 
+      title="Solo numeros y un rango de 3 a 10 "/>
+      <label for="password">contraseña</label>
+      <input type="password" name="contraseña" id="contraseña" required placeholder="Password" pattern="[A-Za-z0-9]{8,  15}" title="Este campo solo puede tener letras, numeros y minimo 8 caracteres"/>
+      <label for="email">correo</label>
+      <input type="email" name="correo" id="correo" required placeholder="Correo"/>
+      <label for="date">fecha</label>
+      <input type="date" name="fecha" id="fecha" required />
+      <br>
+      <fieldset>
+        
+        <legend>genero:</legend>
+        <input
+          type="radio"
+          name="genero"
+          id="masculino"
+          value="masculino"
+          checked
+          required
+        />
+        <label for="masculino">masculino</label>
+        <input
+          type="radio"
+          name="genero"
+          id="femenino"
+          value="femenino"
+          required
+        />
+        <label for="femenino">femenino</label>
+      </fieldset>
+      <br />
+      <fieldset>
+        <input type="checkbox" name="terminos" id="terminos" required />
+        <label for="terminos">acepto terminos y condiciones</label>
+      </fieldset>
+      <label for="comentarios">comentarios:</label>
+      <br>  
+      <textarea
+          name="comentarios"
+          id="comentarios"
+          cols="30"
+          rows="10"
+          placeholder="escribe tus comentarios aqui..."
+          required
+          pattern="[A-Za-z0-9 ]{1,300}" title="solo letras y numeros maximo 300 caracteres"
+        ></textarea>
+      
+      <br />
+      <button type="submit">enviar</button>
+    </form>
+  </body>
+</html>

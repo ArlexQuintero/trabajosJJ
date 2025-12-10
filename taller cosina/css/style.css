@@ -1,0 +1,184 @@
+/* Estilos base */
+body {
+  font-family: cursive;
+  font-weight: 300;
+  max-width: 900px;
+  margin: 0 auto;
+  background-image: url("../img/peru.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+nav {
+  width: 100%;
+  height: 160px;
+  background-color: rgba(235, 180, 78, 0.883);
+}
+
+nav ul {
+  padding-top: 90px;
+  float: right;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+  transition: 0.8s all;
+  padding: 18px 20px;
+}
+
+nav ul li:hover {
+  background-color: #fff;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: #140b0b;
+}
+
+a:active {
+  color: #e26f0e;
+}
+
+.banner {
+  max-width: 100%;
+  height: auto;
+}
+
+.fondo {
+  background-color: rgba(240, 193, 107, 0.616);
+  padding: 2em;
+}
+
+.fp-video,
+.ft-articulo {
+  width: 55%;
+  padding: 2em;
+  overflow-y: visible;
+  display: inline-block;
+  vertical-align: top;
+}
+
+article {
+  padding: 30px;
+  background-color: rgba(107, 142, 240, 0.55);
+}
+
+article h1 {
+  border-bottom: solid thin black;
+}
+
+.boton-container {
+  text-align: center;
+  background-color: #e26f0e;
+  margin: 0 auto;
+}
+
+.boton-container a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.boton {
+  padding: 15px;
+}
+
+.boton-container :hover {
+  background-color: #1fbea4;
+}
+
+.art-image img {
+  max-width: 100%;
+  margin: 0;
+}
+
+.art-cont {
+  width: 740px;
+  vertical-align: top;
+}
+
+h2 {
+  margin: 0;
+  border-bottom: solid thin black;
+}
+
+footer {
+  background-color: rgba(235, 180, 75, 0.883);
+  color: rgb(31, 12, 134);
+  clear: both;
+  line-height: 30px;
+  text-align: center;
+  padding: 45px;
+}
+
+.slider-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow-x: scroll;
+}
+
+.slider-container img {
+  flex: 0 0 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  body {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  nav {
+    height: auto;
+    padding: 10px;
+  }
+
+  nav ul {
+    float: none;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  nav ul li {
+    display: block;
+    padding: 10px 0;
+  }
+
+  .fp-video,
+  .ft-articulo {
+    width: 100%;
+    display: block;
+    padding: 1em 0;
+  }
+
+  iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  .art-cont {
+    width: 100%;
+  }
+
+  .banner {
+    height: auto;
+  }
+
+  .slider-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .slider-container img {
+    flex: 0 0 auto;
+    height: auto;
+  }
+}
