@@ -70,3 +70,16 @@
       font-size: 1rem;
     }   
 }
+
+#tabla .table {
+  background-image: url('../img/channels4_profile.jpg');
+  background-size: cover;       
+  background-position: center;  
+  color: #ffffff;                  
+}
+
+
+#tabla .table td, 
+#tabla .table th {
+  background-color: rgba(101, 101, 101, 0.5); 
+}
