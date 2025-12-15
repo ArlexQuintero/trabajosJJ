@@ -83,3 +83,8 @@
 #tabla .table th {
   background-color: rgba(101, 101, 101, 0.5); 
 }
+.titulo{
+  text-align: center;
+  font-weight: bold;  
+  font-size: 30px;
+}
