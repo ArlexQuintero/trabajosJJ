@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="Es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>La cantera</title>
     <!-- Bootstrap -->
     <link
@@ -16,14 +16,19 @@
     />
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../style/style.css" />
-</head>
-<body>
-     <!-- Navbar -->
+  </head>
+  <body>
+    <!-- Navbar -->
     <nav
       class="navbar navbar-expand-lg border-bottom fixed-top bg-white shadow-sm"
     >
       <div class="container">
-        <a class="navbar-brand fw-bold" href="../index.html"><img src="../img/images-removebg-preview.png" alt="Logo Dim" width="50"></a>
+        <a class="navbar-brand fw-bold" href="../index.html"
+          ><img
+            src="../img/images-removebg-preview.png"
+            alt="Logo Dim"
+            width="50"
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -35,22 +40,22 @@
         <div class="collapse navbar-collapse" id="mainNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="html/cantera.html">Cantera |</a>
+              <a class="nav-link" href="cantera.html">Cantera |</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#partidos">Partidos |</a>
+              <a class="nav-link" href="../index.html#partidos">Partidos |</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#tabla">Posiciones |</a>
+              <a class="nav-link" href="../index.html#tabla">Posiciones |</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#noticias">Noticias |</a>
+              <a class="nav-link" href="../index.html#noticias">Noticias |</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#tienda">Tienda |</a>
+              <a class="nav-link" href="../index.html#tienda">Tienda |</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-rojo ms-lg-2" href="html/boletas.html"
+              <a class="btn btn-rojo ms-lg-2" href="boletas.html"
                 >Boletería</a
               >
             </li>
@@ -58,5 +63,72 @@
         </div>
       </div>
     </nav>
-</body>
+    <p class="titulo"> Une a tus niños A nuestra Cantera</p>
+    <!--formulario-->
+    <div class="container">
+      <div class="card-body">
+        <div class="card-title titulo">Formulario de registro</div>
+        <form action="registro.jsp" method="post">
+          <div class="mb-3">
+            <label for="name">Nombre</label>
+            <input
+            class="form-control"
+              type="text"
+              name="entrada_nombre"
+              id="entrada_nombre"
+              required
+              pattern="[A-Za-z]{3,50}"
+              title="el nombre debe de tener solo letras y estar entre el rango de 3 a 50 "
+              placeholder="Nombre"
+            />
+            <label for="apellido">Apellido</label>
+            <input
+            class="form-control"
+              type="text"
+              name="entrada_apellido"
+              id="entrada_apellido"
+              required
+              pattern="[A-Za-z]{3,50}"
+              title="el apellido debe de tener solo letras y estar entre el rango de 3 a 50 "
+              placeholder="Apellido"
+            />
+            <label for="exampleInputEmail1" class="form-label"
+              >Correo Electronico</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="name@example.com"
+            />
+            <div id="emailHelp" class="form-text"></div>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Rango de las edades</option>
+              <option value="1">Sub-8</option>
+              <option value="2">Sub-10</option>
+              <option value="3">Sub-12</option>
+              <option value="4">Sub-14</option>
+              <option value="5">Sub-16</option>
+              <option value="6">Sub-18</option>
+              <option value="7">Sub-20</option>
+            </select>
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Acepto los términos y condiciones</label
+            >
+            <br>
+            <button class="btn btn-rojo ms-lg-2 centrado" type="submit">enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
