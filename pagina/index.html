@@ -1,215 +1,350 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dim  Sitio Oficial</title>
-  
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="style/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dim Sitio Oficial</title>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg border-bottom fixed-top bg-white shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">Dim</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#partidos">Partidos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabla">Posiciones</a></li>
-        <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tienda">Tienda</a></li>
-        <li class="nav-item"><a class="btn btn-rojo ms-lg-2" href="html/boletas.html">Boletería</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero con carrusel -->
-<header id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active hero-slide">
-      <img src="img/WhatsApp-Image-2020-10-15-at-12.46.31-AM-e1602889702346.jpeg" class="d-block w-100" alt="Estadio">
-      <div class="carousel-caption d-none d-md-block">
-        <h1>El Equipo del pueblo</h1>
-        <p>Vive cada partido desde nuestro sitio oficial.</p>
-        <a href="#partidos" class="btn btn-rojo btn-lg">Matchday</a>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      class="navbar navbar-expand-lg border-bottom fixed-top bg-white shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Dim</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#partidos">Partidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabla">Posiciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#noticias">Noticias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tienda">Tienda</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-rojo ms-lg-2" href="html/boletas.html"
+                >Boletería</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="carousel-item hero-slide">
-      <img src="img/5T2RNZWOP5GK7ORXLX7IFQH3CM.jpg" class="d-block w-100" alt="Jugadores">
-      <div class="carousel-caption d-none d-md-block">
-        <h1>Rojo y antioqueño</h1>
-        <p>Noticias, tienda y experiencias exclusivas.</p>
-        <a href="#tienda" class="btn btn-outline-light btn-lg">Ir a la tienda</a>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</header>
+    </nav>
 
-<section id="partidos" class="py-5">
-  <div class="container">
-    <h2 class="section-title">Últimos partidos</h2>
-    <!-- Cards de partidos -->
-    <div class="row g-4">
-      <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5>Nacional 0 - 0 Dim</h5>
-              <p class="text-muted">13 dic 2025 · Final copa (ida)</p>
-              <a href="https://www.365scores.com/es/football/match/copa-colombia-616/atletico-nacional-independiente-medellin-8640-8643-616#id=4618909" class="btn btn-outline-success btn-sm">Resumen</a>
+    <!-- Hero con carrusel -->
+    <header id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active hero-slide">
+          <img
+            src="img/WhatsApp-Image-2020-10-15-at-12.46.31-AM-e1602889702346.jpeg"
+            class="d-block w-100"
+            alt="Estadio"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h1>El Equipo del pueblo</h1>
+            <p>Vive cada partido desde nuestro sitio oficial.</p>
+            <a href="#partidos" class="btn btn-rojo btn-lg">Matchday</a>
+          </div>
+        </div>
+        <div class="carousel-item hero-slide">
+          <img
+            src="img/5T2RNZWOP5GK7ORXLX7IFQH3CM.jpg"
+            class="d-block w-100"
+            alt="Jugadores"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h1>Rojo y antioqueño</h1>
+            <p>Noticias, tienda y experiencias exclusivas.</p>
+            <a href="#tienda" class="btn btn-outline-light btn-lg"
+              >Ir a la tienda</a
+            >
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </header>
+
+    <section id="partidos" class="py-5">
+      <div class="container">
+        <h2 class="section-title">Últimos partidos</h2>
+        <!-- Cards de partidos -->
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5>Nacional 0 - 0 Dim</h5>
+                <p class="text-muted">13 dic 2025 · Final copa (ida)</p>
+                <a
+                  href="https://www.365scores.com/es/football/match/copa-colombia-616/atletico-nacional-independiente-medellin-8640-8643-616#id=4618909"
+                  class="btn btn-outline-success btn-sm"
+                  >Resumen</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5>Dim 2 - 1 Junior</h5>
+                <p class="text-muted">8 dic 2025 · Liga</p>
+                <a
+                  href="https://www.365scores.com/es-mx/football/match/liga-betplay-620/independiente-medellin-junior-fc-7204-8643-620#id=4627833"
+                  class="btn btn-outline-success btn-sm"
+                  >Resumen</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5>Nacional 2 - 1 Dim</h5>
+                <p class="text-muted">4 dic 2025 · Liga</p>
+                <a
+                  href="https://www.365scores.com/es-mx/football/match/liga-betplay-620/atletico-nacional-independiente-medellin-8640-8643-620#id=4620900"
+                  class="btn btn-outline-success btn-sm"
+                  >Resumen</a
+                >
+              </div>
             </div>
           </div>
         </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h5>Dim 2 - 1 Junior</h5>
-            <p class="text-muted">8 dic 2025 · Liga</p>
-            <a href="https://www.365scores.com/es-mx/football/match/liga-betplay-620/independiente-medellin-junior-fc-7204-8643-620#id=4627833" class="btn btn-outline-success btn-sm">Resumen</a>
-          </div>
+      </div>
+    </section>
+    <!-- Sección de tabla de posiciones -->
+    <section id="tabla" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title">Tabla de posiciones -- Liga II</h2>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>PJ</th>
+                <th>PTS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Medellin</td>
+                <td>20</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>Tolima</td>
+                <td>20</td>
+                <td>38</td>
+              </tr>
+              <tr>
+                <td>Nacinal</td>
+                <td>20</td>
+                <td>37</td>
+              </tr>
+              <tr>
+                <td>Bucaramanga</td>
+                <td>20</td>
+                <td>37</td>
+              </tr>
+              <tr>
+                <td>Junior</td>
+                <td>20</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>Fortaleza</td>
+                <td>20</td>
+                <td>35</td>
+              </tr>
+              <tr>
+                <td>Santa fe</td>
+                <td>20</td>
+                <td>31</td>
+              </tr>
+              <tr>
+                <td>America</td>
+                <td>20</td>
+                <td>29</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="col-md-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5>Nacional 2 - 1 Dim</h5>
-              <p class="text-muted">4 dic 2025 · Liga</p>
-              <a href="https://www.365scores.com/es-mx/football/match/liga-betplay-620/atletico-nacional-independiente-medellin-8640-8643-620#id=4620900" class="btn btn-outline-success btn-sm">Resumen</a>
+    </section>
+    <!-- Sección de noticias -->
+    <section id="noticias" class="py-5">
+      <div class="container">
+        <h2 class="section-title">Noticias</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+              <img
+                src="img/FDGSZVNSKBCULBWVNUTIGT7ROM.avif"
+                class="card-img-top"
+                alt="Noticia"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Final Paisa en tablas</h5>
+                <p class="card-text">
+                  En el primer partido no se sacaron diferencias entre los dos
+                  quipos mira el resumen completo
+                </p>
+                <a
+                  href="https://colombia.as.com/futbol/nacional-dim-en-vivo-online-copa-betplay-en-directo-f202512-d/"
+                  class="btn btn-outline-success btn-sm"
+                  >Leer más</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+              <img
+                src="img/Juan-Arizala-Milan.webp"
+                class="card-img-top"
+                alt="Noticia"
+              />
+              <div class="card-body">
+                <h5 class="card-title">De la Cantera a Italia</h5>
+                <p class="card-text">
+                  El joven Juan Arizala jugador de la cantera del Medellin que
+                  llega a Italia despues de grandes actuacciones con el quipo
+                  rojo
+                </p>
+                <a
+                  href="https://www.teleantioquia.co/deportes/el-canterano-del-dim-juan-arizala-tendria-todo-acordado-con-el-milan-seria-el-septimo-colombiano-en-jugar-para-el-equipo-italiano-539365"
+                  class="btn btn-outline-success btn-sm"
+                  >Leer más</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+              <img
+                src="img/whatsapp-image-2023-11-15-at-09-40-09-1_43754954_20231115094348.webp"
+                class="card-img-top"
+                alt="Noticia"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Vuelve el goleador</h5>
+                <p class="card-text">
+                  En el Medellin se espera con ancias el regreso de G14
+                </p>
+                <a
+                  href="https://www.elcolombiano.com/deportes/futbol/german-cano-100-goles-fluminense-goleador-historico-dim-DL26780672"
+                  class="btn btn-outline-success btn-sm"
+                  >Leer más</a
+                >
+              </div>
             </div>
           </div>
         </div>
-    </div>
-      
-  </div>
-</section>
-<!-- Sección de tabla de posiciones -->
-<section id="tabla" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="section-title">Tabla de posiciones -- Liga II</h2>
-    <div class="table-responsive">
-      <table class="table">
-        <thead><tr><th>Equipo</th><th>PJ</th><th>PTS</th></tr></thead>
-        <tbody>
-          <tr><td>Medellin</td><td>20</td><td>40</td></tr>
-          <tr><td>Tolima</td><td>20</td><td>38</td></tr>
-          <tr><td>Nacinal</td><td>20</td><td>37</td></tr>
-          <tr><td>Bucaramanga</td><td>20</td><td>37</td></tr>
-          <tr><td>Junior</td><td>20</td><td>35</td></tr>
-          <tr><td>Fortaleza</td><td>20</td><td>35</td></tr>
-          <tr><td>Santa fe</td><td>20</td><td>31</td></tr>
-          <tr><td>America</td><td>20</td><td>29</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-<!-- Sección de noticias -->
-<section id="noticias" class="py-5">
-  <div class="container">
-    <h2 class="section-title">Noticias</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="img/FDGSZVNSKBCULBWVNUTIGT7ROM.avif" class="card-img-top" alt="Noticia">
-          <div class="card-body">
-            <h5 class="card-title">Final Paisa en tablas</h5>
-            <p class="card-text">En el primer partido no se sacaron diferencias entre los dos quipos mira el resumen completo </p>
-            <a href="https://colombia.as.com/futbol/nacional-dim-en-vivo-online-copa-betplay-en-directo-f202512-d/" class="btn btn-outline-success btn-sm">Leer más</a>
+      </div>
+    </section>
+    <!-- Sección de tienda -->
+    <section id="tienda" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title">Tienda Roja</h2>
+        <div class="row g-4">
+          <div class="col-sm-6 col-lg-3">
+            <div class="card product-card shadow-sm">
+              <img
+                src="img/Camiseta_Visitante_DIM_2025_Azul_KB7921_01_laydown.avif"
+                class="card-img-top"
+                alt="Camiseta"
+              />
+              <div class="card-body">
+                <h6>Camiseta Visitante 2025-2026</h6>
+                <p>$299.900</p>
+                <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card product-card shadow-sm">
+              <img src="img/peluche.jpg" class="card-img-top" alt="Peluche" />
+              <div class="card-body">
+                <h6>Peluche Fidel</h6>
+                <p>$59.900</p>
+                <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card product-card shadow-sm">
+              <img
+                src="img/0006_Hombre-front.jpg"
+                class="card-img-top"
+                alt="Camiseta"
+              />
+              <div class="card-body">
+                <h6>Camiseta Visitante 2024-2025</h6>
+                <p>$199.900</p>
+                <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card product-card shadow-sm">
+              <img src="img/Placa1-1.png" class="card-img-top" alt="Camiseta" />
+              <div class="card-body">
+                <h6>PLACA MOTO DECORATIVA</h6>
+                <p>$29.900</p>
+                <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="img/Juan-Arizala-Milan.webp" class="card-img-top" alt="Noticia">
-          <div class="card-body">
-            <h5 class="card-title">De la Cantera a Italia</h5>
-            <p class="card-text">El joven Juan Arizala jugador de la cantera del Medellin que llega a Italia despues de grandes actuacciones con el quipo rojo</p>
-            <a href="https://www.teleantioquia.co/deportes/el-canterano-del-dim-juan-arizala-tendria-todo-acordado-con-el-milan-seria-el-septimo-colombiano-en-jugar-para-el-equipo-italiano-539365" class="btn btn-outline-success btn-sm">Leer más</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="img/whatsapp-image-2023-11-15-at-09-40-09-1_43754954_20231115094348.webp" class="card-img-top" alt="Noticia">
-          <div class="card-body">
-            <h5 class="card-title">Vuelve el goleador</h5>
-            <p class="card-text">En el Medellin se espera con ancias el regreso de G14</p>
-            <a href="https://www.elcolombiano.com/deportes/futbol/german-cano-100-goles-fluminense-goleador-historico-dim-DL26780672" class="btn btn-outline-success btn-sm">Leer más</a>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</section>
-<!-- Sección de tienda -->
-<section id="tienda" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="section-title">Tienda Roja</h2>
-    <div class="row g-4">
-      <div class="col-sm-6 col-lg-3">
-        <div class="card product-card shadow-sm">
-          <img src="img/Camiseta_Visitante_DIM_2025_Azul_KB7921_01_laydown.avif" class="card-img-top" alt="Camiseta">
-          <div class="card-body">
-            <h6>Camiseta Visitante 2025-2026</h6>
-            <p>$299.900</p>
-            <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="card product-card shadow-sm">
-          <img src="img/peluche.jpg" class="card-img-top" alt="Peluche">
-          <div class="card-body">
-            <h6>Peluche Fidel</h6>
-            <p>$59.900</p>
-            <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="card product-card shadow-sm">
-          <img src="img/0006_Hombre-front.jpg" class="card-img-top" alt="Camiseta">
-          <div class="card-body">
-            <h6>Camiseta Visitante 2024-2025</h6>
-            <p>$199.900</p>
-            <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="card product-card shadow-sm">
-          <img src="img/Placa1-1.png" class="card-img-top" alt="Camiseta">
-          <div class="card-body">
-            <h6>PLACA MOTO DECORATIVA</h6>
-            <p>$29.900</p>
-            <a href="#tienda" class="btn btn-rojo btn-sm">Comprar</a>
-          </div>
-        </div>
-      </div>
-    </div> 
-  </div>
-</section>
-<!-- pie de pagina-->
-<footer class="py-4 bg-dark text-light text-center">
-  <p>© 2025 Deportivo Independiente Medellin · Todos los derechos reservados</p>
-</footer>
+    </section>
+    <!-- pie de pagina-->
+    <footer class="py-4 bg-dark text-light text-center">
+      <p>
+        © 2025 Deportivo Independiente Medellin · Todos los derechos reservados
+      </p>
+    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
