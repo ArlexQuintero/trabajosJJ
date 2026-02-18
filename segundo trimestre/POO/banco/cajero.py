@@ -35,5 +35,5 @@ class CuentaCorriente:
             print("Tranferencia realizada con exito")
     #mostrar todos los datos de la cuenta 
     def get_datos_cuenta(self)->str:
-        return f"Titular:{self.nombre}\n Numero de cuneta:{self.numero_cuenta} \n Saldo:{self.saldo}"
+        return f"Titular:{self.nombre}\n Numero de cuenta:{self.numero_cuenta} \n Saldo:{self.saldo}"
 
