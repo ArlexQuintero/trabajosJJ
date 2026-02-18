@@ -3,8 +3,8 @@ from cajero import CuentaCorriente
 
 def main():
     #creamos dos cuentas corriente con titulares y saldos iniciales
-    cuenta1=CuentaCorriente("Pepito Perez",30000000)
-    cuenta2=CuentaCorriente("Jairo Quintero", 32000)
+    cuenta1=CuentaCorriente("Pepito Perez",30000)
+    cuenta2=CuentaCorriente("alma marcela", 32000)
     
     #le pasamos los datos de cada cuenta por paramretos 
     CuentaCorriente.transferencia(cuenta1, cuenta2,5000)

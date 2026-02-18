@@ -14,7 +14,7 @@ class CuentaCorriente:
             self.saldo += ingreso
             print("tranferencia realizada con exito")
     # se declara el metodo para el retiro y validacion con el saldo actual
-    def set_retiyo(self,retiro:float):
+    def set_retiro(self,retiro:float):
         if retiro > self.saldo:
             print("Saldo insuficioente")
         else:
@@ -35,5 +35,5 @@ class CuentaCorriente:
             print("Tranferencia realizada con exito")
     #mostrar todos los datos de la cuenta 
     def get_datos_cuenta(self)->str:
-        return f"Titular:{self.nombre}\n Numeor de cuneta:{self.numero_cuenta} \n Saldo:{self.saldo}"
+        return f"Titular:{self.nombre}\n Numero de cuneta:{self.numero_cuenta} \n Saldo:{self.saldo}"
 
