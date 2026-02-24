@@ -1,22 +1,17 @@
- #CarroHibrido
-# Características:
-# Tiene tanque de gasolina
-# Tiene batería
-# Puede usar ambos sistemas
-# Si se acaba la batería → usa gasolina
-# Si se acaba gasolina → usa batería
-# Debe sobrescribir acelerar().
+#Importamos las clases necesarias
 from CarroElectrico import CarroElectrico
 from Carro import Carro  
 
+#creamos la clase
 class CarroHibrido(CarroElectrico):
+    
     def __init__(self, marca, color, velocidad_max, bateria_max, tanque_max):
         
         super().__init__(marca, color, velocidad_max, bateria_max)
 
         self.tanque = tanque_max
         self.tanque_max = tanque_max
-    
+    #metodo para el cambio de modo cuando se agote 
     def hibrido(self):
         if self.bateria > 0:
             self.bateria -= 5
@@ -27,7 +22,7 @@ class CarroHibrido(CarroElectrico):
         else:
             return "Sin energía disponible"
     
-
+    #metodo para hacelerar y disminuir el consumo del que estado se encuentre
     def acelerar(self, aumentar):
         if not self.encendido:
             return "El carro está apagado. Primero enciéndelo"

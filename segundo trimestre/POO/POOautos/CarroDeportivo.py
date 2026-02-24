@@ -1,11 +1,6 @@
-# CarroDeportivo
-# Características:
-# Tiene modo turbo
-# Acelera más rápido que un carro normal
-# Consume más combustible al acelerar fuerte
-# También sobrescribe acelerar().
-from Carro import Carro
 
+from Carro import Carro
+#creamos la clase 
 class CarroDeportivo(Carro):
     def __init__(self, marca, color, velocidad_max, tanque_max):
         super().__init__(marca, color, velocidad_max)
@@ -13,6 +8,7 @@ class CarroDeportivo(Carro):
         self.tanque_max = tanque_max
         self.turbo = False  
 
+    #metodo para la activacion y desactivacion del turbo
     def activar_turbo(self):
         self.turbo = True
         return f"Turbo activado en el {self.marca} "
@@ -21,6 +17,7 @@ class CarroDeportivo(Carro):
         self.turbo = False
         return f"Turbo desactivado en el {self.marca} "
 
+    #metodo acelerar con el consumo extra por el turbo y mayor velocidad
     def acelerar(self, aumento):
         if not self.encendido:
             return "El carro está apagado, primero enciéndelo"
@@ -47,5 +44,6 @@ class CarroDeportivo(Carro):
         modo = "Turbo" if self.turbo else "Normal"
         return f"Velocidad: {self.velocidad} Km/h | Modo: {modo} | Tanque: {self.tanque:.1f} ml"
 
+    #metodo para mostrar los datos finales 
     def __str__(self):
         return f"Carro Deportivo {self.marca} de color {self.color} | Tanque: {self.tanque} ml"
