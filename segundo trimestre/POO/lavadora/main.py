@@ -25,8 +25,8 @@ class SistemaLavaSmart:
                 raise ValueError("Opcion invalida.")
 
             lavadora.encender()
-            lavadora._validar_kilos()
-            lavadora._llenar()
+            lavadora.validar_kilos()
+            lavadora.llenar()
             lavadora.lavar()
             lavadora.enjuagar()
 

@@ -43,15 +43,15 @@ class Lavadora(ABC):
     def ciclo_terminado(self, nombre_cliente):
         self._sonido("finalizado")
         print("\n Ciclo finalizado")
-        self._mostrar_reporte_cliente(nombre_cliente)
+        self.Mostrar_Reporte(nombre_cliente)
 
     # metodos protegidos
 
-    def _validar_kilos(self):
+    def validar_kilos(self):
         if self._kilos < 5 or self._kilos > 40:
             raise ValueError("Los kilos deben estar entre 5 y 40.")
 
-    def _llenar(self):
+    def llenar(self):
         print(" Llenando agua...")
         self._sonido("llenado")
         time.sleep(2)
@@ -68,7 +68,7 @@ class Lavadora(ABC):
 
     # metodos privados
 
-    def __calcular_costos(self):
+    def calcular_costos(self):
         costo_base = self._kilos * self._precio_kilo
 
         aumento = 0
@@ -82,7 +82,7 @@ class Lavadora(ABC):
 
         return costo_base, aumento, iva_valor, total, utilidad
 
-    def __calcular_consumo_energia(self):
+    def calcular_energia(self):
         tiempo_horas = self._tiempo_lavado / 60
         consumo = self._potencia_kw * tiempo_horas
 
@@ -92,10 +92,10 @@ class Lavadora(ABC):
 
         return consumo, costo_energia
 
-    def _mostrar_reporte_cliente(self, nombre_cliente):
+    def Mostrar_Reporte(self, nombre_cliente):
         fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        costo_base, aumento, iva_valor, total, utilidad = self.__calcular_costos()
-        consumo, costo_energia = self.__calcular_consumo_energia()
+        costo_base, aumento, iva_valor, total, utilidad = self.calcular_costos()
+        consumo, costo_energia = self.calcular_energia()
 
         print("\n=========== COMPROBANTE ===========")
         print(f"Cliente: {nombre_cliente}")
@@ -110,8 +110,6 @@ class Lavadora(ABC):
         print(f"Costo energía: ${costo_energia:,.0f}")
         print("Gracias por usar Lava Smart ")
         print("===================================")
-
-    # ---------------- POLIMORFISMO ----------------
 
     @abstractmethod
     def lavar(self):

@@ -9,16 +9,16 @@ class LavadoraInteligente(Lavadora):
         self._wifi = True
         self._sensores = True
 
-    def detectar_tipo_ropa(self):
+    def detectar_tipoRopa(self):
         print(" Detectando tipo de ropa automaticamente...")
 
-    def conectar_wifi(self):
+    def conectarWifi(self):
         if self._wifi:
             print(" Enviando reporte por WiFi...")
 
     def lavar(self):
-        self.detectar_tipo_ropa()
+        self.detectar_tipoRopa()
         print(" Lavado INTELIGENTE optimizado...")
         self._sonido("lavado")
         time.sleep(self._tiempo_lavado)
-        self.conectar_wifi()
+        self.conectarWifi()
