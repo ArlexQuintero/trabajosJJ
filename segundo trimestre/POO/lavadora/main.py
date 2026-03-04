@@ -1,4 +1,4 @@
-
+from Lavadora import Lavadora
 from LavadoraEstandar import LavadoraEstandar
 from LavadoraInteligente import LavadoraInteligente
 
@@ -8,38 +8,30 @@ class SistemaLavaSmart:
     @staticmethod
     def ejecutar():
 
-        try:
-            print("====== Smart Lava ======")
+        print("====== Smart Lava ======")
 
-            nombre = input("Nombre del cliente: ")
-            kilos = float(input("Ingrese kilos (5-40): "))
-            tipo = input("Tipo de prenda: ")
-            estrato = int(input("Estrato (2-5): "))
-            opcion = input("Tipo lavadora (1=Estandar, 2=Inteligente): ")
+        nombre = Lavadora.pedir_nombre()
+        kilos = Lavadora.pedir_kilos()
+        tipo = Lavadora.pedir_prenda()
+        estrato = Lavadora.pedir_estrato()
+        opcion = Lavadora.pedir_tipo_lavadora()
 
-            if opcion == "1":
-                lavadora = LavadoraEstandar(kilos, tipo, estrato)
-            elif opcion == "2":
-                lavadora = LavadoraInteligente(kilos, tipo, estrato)
-            else:
-                raise ValueError("Opcion invalida.")
+        if opcion == 1:
+            lavadora = LavadoraEstandar(kilos, tipo, estrato)
+        else:
+            lavadora = LavadoraInteligente(kilos, tipo, estrato)
 
-            lavadora.encender()
-            lavadora.validar_kilos()
-            lavadora.llenar()
-            lavadora.lavar()
-            lavadora.enjuagar()
+        lavadora.validar_datos()
 
-            secar = input("¿Desea secar? (s/n): ")
-            if secar.lower() == "s":
-                lavadora.secar()
+        lavadora.encender()
+        lavadora.llenar()
+        lavadora.lavar()
+        lavadora.enjuagar()
 
-            lavadora.ciclo_terminado(nombre)
+        if Lavadora.pedir_secado() == 1:
+            lavadora.secar()
 
-        except ValueError as e:
-            print(" Error:", e)
-        except Exception as e:
-            print(" Error inesperado:", e)
+        lavadora.ciclo_terminado(nombre)
 
 
 if __name__ == "__main__":
