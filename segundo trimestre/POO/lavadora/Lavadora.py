@@ -125,8 +125,9 @@ class Lavadora(ABC):
         self._sonido("encendido")
 
     def ciclo_terminado(self, nombre_cliente):
-        self._sonido("finalizado")
         print("\n Ciclo finalizado...")
+        self._sonido("finalizado")
+        time.sleep(1)
         self.Mostrar_Reporte(nombre_cliente)
 
     def validar_datos(self):
@@ -199,6 +200,7 @@ class Lavadora(ABC):
     #mostrar el reporte final
     def Mostrar_Reporte(self, nombre_cliente):
         fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         costo_base, aumento, iva_valor, total, utilidad = self.calcular_costos()
         consumo, costo_energia = self.calcular_energia()
 
@@ -207,8 +209,22 @@ class Lavadora(ABC):
         print(f"Fecha: {fecha}")
         print(f"Kilos: {self._kilos}")
         print(f"Tipo prenda: {self._tipo_ropa}")
+        print(f"Estrato: {self._estrato}")
+
+        print("\n------ Detalle de costos ------")
+        print(f"Costo base lavado: ${costo_base:,.0f}")
+        print(f"Aumento por prenda especial: ${aumento:,.0f}")
+        print(f"IVA (19%): ${iva_valor:,.0f}")
+
+        print("\n------ Energía ------")
+        print(f"Consumo energía (kWh): {consumo:.3f}")
+        print(f"Costo energía: ${costo_energia:,.0f}")
+
+        print("\n------ Totales ------")
         print(f"Total a pagar: ${total:,.0f}")
-        print("Gracias por usar Smart Lava")
+        print(f"Utilidad del sistema (30%): ${utilidad:,.0f}")
+
+        print("\nGracias por usar Smart Lava")
         print("===================================")
 
     @abstractmethod
