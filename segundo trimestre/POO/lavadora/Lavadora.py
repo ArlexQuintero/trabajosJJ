@@ -12,7 +12,7 @@ class Lavadora(ABC):
         self._kilos = kilos
         self._tipo_ropa = tipo_ropa
         self.__estado = "apagada"
-        self._tiempo_lavado = 5
+        self._tiempo_lavado = 1
         self._precio_kilo = 10000
         self._aumento_especial = 0.05
         self._iva = 0.19
@@ -21,7 +21,7 @@ class Lavadora(ABC):
 
     #definir los sonidos
     def _sonido(self, tipo):
-        
+
         base_path = os.path.join(os.path.dirname(__file__), "sonidos")
 
         sonidos = {
@@ -34,8 +34,24 @@ class Lavadora(ABC):
         }
 
         if tipo in sonidos:
+
             ruta = os.path.join(base_path, sonidos[tipo])
-            winsound.PlaySound(ruta, winsound.SND_FILENAME)
+            winsound.PlaySound(ruta, winsound.SND_FILENAME | winsound.SND_ASYNC)
+
+            duracion = 5
+            pasos = 25
+
+            for i in range(pasos + 1):
+
+                progreso = int((i / pasos) * 100)
+                barra = "█" * i + "-" * (pasos - i)
+
+                print(f"\r[{barra}] {progreso}%", end="")
+
+                time.sleep(duracion / pasos)
+
+            print()
+            winsound.PlaySound(None, winsound.SND_PURGE)
 
     #validaciones de todos los campos para solo datos validos
     @staticmethod
