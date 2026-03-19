@@ -2,15 +2,40 @@
 <html>
 <head>
     <title>Detalle del Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Detalle del Pedido</h1>
-    <p><strong>ID:</strong> {{ pedido.id }}</p>
-    <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
-    <p><strong>Fecha Pedido:</strong> {{ pedido.fecha_pedido }}</p>
-    <p><strong>Producto:</strong> {{ pedido.producto }}</p>
-    <p><strong>Cantidad:</strong> {{ pedido.cantidad }}</p>
-    <p><strong>Estado:</strong> {{ pedido.get_estado_display }}</p>
-    <p><a href="{% url 'listar_pedidos' %}">Volver a la lista de pedidos</a></p>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Detalle del Pedido</h4>
+        </div>
+
+        <div class="card-body">
+
+            <p><strong>ID:</strong> {{ pedido.id }}</p>
+            <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+            <p><strong>Fecha Pedido:</strong> {{ pedido.fecha_pedido }}</p>
+            <p><strong>Producto:</strong> {{ pedido.producto }}</p>
+            <p><strong>Cantidad:</strong> {{ pedido.cantidad }}</p>
+
+            <p>
+                <strong>Estado:</strong>
+                <span class="badge bg-primary">
+                    {{ pedido.get_estado_display }}
+                </span>
+            </p>
+
+            <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary mt-3">
+                ← Volver
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

@@ -37,5 +37,9 @@ def actualizar_pedido(request, pk):
 
 def eliminar_pedido(request, pk):
     pedido = get_object_or_404(Pedido, pk=pk)
-    pedido.delete()
-    return redirect('listar_pedidos')
+
+    if request.method == 'POST':
+        pedido.delete()
+        return redirect('listar_pedidos')
+
+    return render(request, 'pedidos/eliminar_pedido.html', {'pedido': pedido})
