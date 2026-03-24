@@ -63,7 +63,7 @@
 
                   <a
                     href="{% url 'actualizar_pedido' pedido.id %}"
-                    class="btn btn-sm btn-warning"
+                    class="btn btn-sm btn-secondary"
                   >
                     <span class="material-symbols-outlined">edit</span>
                   </a>
@@ -73,6 +73,12 @@
                     class="btn btn-sm btn-danger"
                   >
                     <span class="material-symbols-outlined"> delete </span>
+                  </a>
+                  <a href="{% url 'exportar_pedidos_pdf' %}" 
+                    class="btn btn-sm btn-warning">
+                    <span class="material-symbols-outlined">
+                      picture_as_pdf
+                    </span>
                   </a>
                 </td>
               </tr>

@@ -16,6 +16,8 @@ urlpatterns = [
     path('editar/<int:pk>/', views.actualizar_pedido, name='actualizar_pedido'),
      # Ruta para eliminar un pedido existente
     path('eliminar/<int:pk>/', views.eliminar_pedido, name='eliminar_pedido'),
+    #Ruta para la gracion de los PDF
+    path('exportar-pdf/', views.exportar_pedidos_pdf, name='exportar_pedidos_pdf'),
 ]
 
 

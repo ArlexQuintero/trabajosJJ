@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Pedido
 from .forms import PedidoForm
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 # Crear las vistas para las operaciones CRUD
 def listar_pedidos(request):
     pedidos = Pedido.objects.all()
@@ -43,3 +46,22 @@ def eliminar_pedido(request, pk):
         return redirect('listar_pedidos')
 
     return render(request, 'pedidos/eliminar_pedido.html', {'pedido': pedido})
+    #crear el pdf
+
+def exportar_pedidos_pdf(request):
+    pedidos = Pedido.objects.all()
+
+    template = get_template('pedidos/pedidos_pdf.html')
+    html = template.render({'pedidos': pedidos})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="pedidos.pdf"'
+
+    pisa_status = pisa.CreatePDF(
+        html, dest=response
+    )
+
+    if pisa_status.err:
+        return HttpResponse('Error al generar el PDF', status=500)
+
+    return response
