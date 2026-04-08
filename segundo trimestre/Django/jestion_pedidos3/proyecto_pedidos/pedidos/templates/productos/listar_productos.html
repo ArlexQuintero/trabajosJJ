@@ -1,8 +1,9 @@
 {% load filtros %}
 <!doctype html>
-<html>
+<html lang="es">
   <head>
-    <title>Lista de Pedidos</title>
+    <meta charset="UTF-8"/>
+    <title>Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
   </head>
@@ -10,8 +11,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="#">
-          <span class="material-symbols-outlined align-middle">inventory</span>
-          Gestión de Pedidos
+          <span class="material-symbols-outlined align-middle">category</span>
+          Gestión de productos
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
           <span class="navbar-toggler-icon"></span>
@@ -19,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarMenu">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" href="{% url 'listar_pedidos' %}">
+              <a class="nav-link" href="{% url 'listar_pedidos' %}">
                 <span class="material-symbols-outlined align-middle" style="font-size:18px">receipt_long</span>
                 Pedidos
               </a>
@@ -31,7 +32,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'listar_productos' %}">
+              <a class="nav-link active" href="{% url 'listar_productos' %}">
                 <span class="material-symbols-outlined align-middle" style="font-size:18px">category</span>
                 Productos
               </a>
@@ -51,20 +52,20 @@
     </nav>
 
     <div class="container mt-5">
-      <h1 class="mb-4 text-center">Lista de Pedidos</h1>
+      <h1 class="mb-4 text-center">Lista de Productos</h1>
 
       <div class="d-flex justify-content-between mb-3">
         <div>
-          <a href="{% url 'exportar_pedidos_pdf' %}" class="btn btn-danger me-2">
+          <a href="{% url 'exportar_productos_pdf' %}" class="btn btn-danger me-2">
             <span class="material-symbols-outlined align-middle" style="font-size:18px">picture_as_pdf</span>
             Exportar PDF
           </a>
-          <a href="{% url 'exportar_pedidos_excel' %}" class="btn btn-success">
+          <a href="{% url 'exportar_productos_excel' %}" class="btn btn-success">
             <span class="material-symbols-outlined align-middle" style="font-size:18px">table_view</span>
             Exportar Excel
           </a>
         </div>
-        <a href="{% url 'crear_pedido' %}" class="btn btn-primary">+ Nuevo Pedido</a>
+        <a href="{% url 'crear_producto' %}" class="btn btn-primary">+ Nuevo Producto</a>
       </div>
 
       <div class="card shadow">
@@ -73,50 +74,41 @@
             <thead class="table-dark">
               <tr>
                 <th>ID</th>
-                <th>Cliente</th>
-                <th>Fecha Pedido</th>
-                <th>Total</th>
-                <th>Estado</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {% for pedido in pedidos %}
+              {% for producto in productos %}
               <tr>
-                <td>{{ pedido.id }}</td>
-                <td>{{ pedido.cliente }}</td>
-                <td>{{ pedido.fecha_pedido }}</td>
-                <td>{{ pedido.total|precio_formato }}</td>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.precio|precio_formato }}</td>
                 <td>
-                  {% if pedido.estado == 'pendiente' %}
-                    <span class="badge bg-warning text-dark">{{ pedido.get_estado_display }}</span>
-                  {% elif pedido.estado == 'procesando' %}
-                    <span class="badge bg-info text-dark">{{ pedido.get_estado_display }}</span>
-                  {% elif pedido.estado == 'enviado' %}
-                    <span class="badge bg-primary">{{ pedido.get_estado_display }}</span>
-                  {% elif pedido.estado == 'entregado' %}
-                    <span class="badge bg-success">{{ pedido.get_estado_display }}</span>
-                  {% elif pedido.estado == 'cancelado' %}
-                    <span class="badge bg-danger">{{ pedido.get_estado_display }}</span>
+                  {% if producto.stock <= 5 %}
+                    <span class="badge bg-danger">{{ producto.stock }} ⚠</span>
+                  {% elif producto.stock <= 10 %}
+                    <span class="badge bg-warning text-dark">{{ producto.stock }}</span>
+                  {% else %}
+                    <span class="badge bg-success">{{ producto.stock }}</span>
                   {% endif %}
                 </td>
                 <td>
-                  <a href="{% url 'ver_pedido' pedido.id %}" class="btn btn-sm btn-info">
-                    <span class="material-symbols-outlined">visibility</span>
-                  </a>
-                  <a href="{% url 'actualizar_pedido' pedido.id %}"
+                  <a href="{% url 'editar_producto' producto.id %}"
                      class="btn btn-sm btn-secondary btnEditar"
-                     data-nombre="Pedido #{{ pedido.id }}">
+                     data-nombre="{{ producto.nombre }}">
                     <span class="material-symbols-outlined">edit</span>
                   </a>
                   <button type="button"
                           class="btn btn-sm btn-danger btnEliminar"
-                          data-id="{{ pedido.id }}"
-                          data-nombre="Pedido #{{ pedido.id }}">
+                          data-id="{{ producto.id }}"
+                          data-nombre="{{ producto.nombre }}">
                     <span class="material-symbols-outlined">delete</span>
                   </button>
-                  <form id="formEliminar-{{ pedido.id }}"
-                        action="{% url 'eliminar_pedido' pedido.id %}"
+                  <form id="formEliminar-{{ producto.id }}"
+                        action="{% url 'eliminar_producto' producto.id %}"
                         method="POST" style="display:none">
                     {% csrf_token %}
                   </form>
@@ -124,50 +116,12 @@
               </tr>
               {% empty %}
               <tr>
-                <td colspan="6" class="text-muted">No hay pedidos registrados.</td>
+                <td colspan="5" class="text-muted">No hay productos registrados.</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-
-        {% if pedidos.has_other_pages %}
-        <div class="card-footer d-flex justify-content-between align-items-center">
-          <small class="text-muted">
-            Página {{ pedidos.number }} de {{ pedidos.paginator.num_pages }}
-            &mdash; {{ pedidos.paginator.count }} pedidos en total
-          </small>
-          <nav>
-            <ul class="pagination pagination-sm mb-0">
-              <li class="page-item {% if not pedidos.has_previous %}disabled{% endif %}">
-                {% if pedidos.has_previous %}
-                  <a class="page-link" href="?page={{ pedidos.previous_page_number }}">&laquo;</a>
-                {% else %}
-                  <span class="page-link">&laquo;</span>
-                {% endif %}
-              </li>
-              {% for num in pedidos.paginator.page_range %}
-                {% if pedidos.number == num %}
-                  <li class="page-item active">
-                    <span class="page-link">{{ num }}</span>
-                  </li>
-                {% elif num > pedidos.number|add:'-3' and num < pedidos.number|add:'3' %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                  </li>
-                {% endif %}
-              {% endfor %}
-              <li class="page-item {% if not pedidos.has_next %}disabled{% endif %}">
-                {% if pedidos.has_next %}
-                  <a class="page-link" href="?page={{ pedidos.next_page_number }}">&raquo;</a>
-                {% else %}
-                  <span class="page-link">&raquo;</span>
-                {% endif %}
-              </li>
-            </ul>
-          </nav>
-        </div>
-        {% endif %}
       </div>
     </div>
 
@@ -217,10 +171,10 @@
       {% for message in messages %}
         {% if message.tags == 'warning' %}
         Swal.fire({
-          title: '⚠ Stock bajo',
+          title: '⚠ Advertencia',
           text:  '{{ message }}',
           icon:  'warning',
-          timer: 6000,
+          timer: 4000,
           showConfirmButton: true,
           confirmButtonText: 'Entendido',
           confirmButtonColor: '#ffc107',

@@ -1,49 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            font-size: 12px;
-        }
-
-        h1 { 
-            text-align: center; 
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 6px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #cccccc; 
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        h1   { color: #1a1a2e; text-align: center; margin-bottom: 5px; }
+        .fecha { text-align: center; color: #666; margin-bottom: 20px; font-size: 11px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        thead th { background-color: #1a1a2e; color: white; padding: 8px; text-align: center; }
+        tbody td { padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: center; }
+        tbody tr:nth-child(even) { background-color: #f8f9fa; }
+        .badge-pendiente  { color: #856404; }
+        .badge-procesando { color: #0c5460; }
+        .badge-enviado    { color: #004085; }
+        .badge-entregado  { color: #155724; }
+        .badge-cancelado  { color: #721c24; }
+        .total-row { font-weight: bold; background-color: #e9ecef; }
+        .footer { margin-top: 20px; text-align: right; font-size: 10px; color: #999; }
     </style>
 </head>
 <body>
-    <h1>Lista de Pedidos</h1>
-
+    <h1>Listado de Pedidos</h1>
+    <p class="fecha">Generado el {% now "d/m/Y H:i" %}</p>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Fecha</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
+                <th>Productos</th>
+                <th>Total</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -52,17 +38,18 @@
             <tr>
                 <td>{{ pedido.id }}</td>
                 <td>{{ pedido.cliente }}</td>
-                <td>{{ pedido.fecha_pedido|date:"d/m/Y" }}</td>
-                <td>{{ pedido.producto }}</td>
-                <td>{{ pedido.cantidad }}</td>
-                <td>{{ pedido.get_estado_display }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">No hay pedidos registrados</td>
+                <td>{{ pedido.fecha_pedido }}</td>
+                <td>
+                    {% for detalle in pedido.detalles.all %}
+                        {{ detalle.producto.nombre }} x{{ detalle.cantidad }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>${{ pedido.total }}</td>
+                <td class="badge-{{ pedido.estado }}">{{ pedido.get_estado_display }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <p class="footer">Total de pedidos: {{ pedidos.count }}</p>
 </body>
 </html>

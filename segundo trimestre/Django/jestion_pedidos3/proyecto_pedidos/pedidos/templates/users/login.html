@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 { margin-bottom: 1.5rem; color: #1a1a2e; text-align: center; }
+        label { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; color: #555; }
+        input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+        }
+        input:focus { outline: none; border-color: #4f46e5; }
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover { background: #4338ca; }
+        .error {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>🔐 Gestión de Pedidos</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Usuario</label>
+        <input type="text" name="username" placeholder="Tu usuario" required autofocus>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" placeholder="Tu contraseña" required>
+
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+</body>
+</html>

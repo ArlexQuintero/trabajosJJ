@@ -1,28 +1,26 @@
 <!doctype html>
-<html>
+<html lang="es">
   <head>
-    <title>Eliminar Pedido</title>
+    <meta charset="UTF-8" />
+    <title>Eliminar Producto</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
   </head>
-  <body
-    class="bg-light d-flex justify-content-center align-items-center"
-    style="height: 100vh"
-  >
+  <body class="bg-light">
     <div class="card shadow mx-auto" style="max-width: 450px">
       <div class="card-header bg-danger text-white">
-        <h5 class="mb-0">Eliminar pedido</h5>
+        <h5 class="mb-0">Eliminar Producto</h5>
       </div>
       <div class="card-body text-center">
-        <p class="mb-1">Estás a punto de eliminar el pedido:</p>
-        <h5 class="text-danger mb-3">{{ pedido.nombre }}</h5>
+        <p class="mb-1">Estás a punto de eliminar el producto:</p>
+        <h5 class="text-danger mb-3">{{ producto.nombre }}</h5>
 
         <!-- Formulario oculto que se envía tras confirmar -->
         <form method="POST" id="formEliminar">{% csrf_token %}</form>
 
-        <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary me-2"
+        <a href="{% url 'listar_productos' %}" class="btn btn-secondary me-2"
           >Cancelar</a
         >
         <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">
@@ -38,7 +36,7 @@
         .addEventListener("click", function () {
           Swal.fire({
             title: "¿Confirmar eliminación?",
-            html: "Vas a eliminar el pedido <strong>{{ pedido.nombre }}</strong>.<br>Esta acción no se puede deshacer.",
+            html: "Vas a eliminar el producto <strong>{{ producto.nombre }}</strong>.<br>Esta acción no se puede deshacer.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#dc3545",
@@ -52,5 +50,6 @@
           });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

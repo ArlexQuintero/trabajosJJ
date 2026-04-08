@@ -1,58 +1,422 @@
 <!doctype html>
-<html>
-<head>
-  <title>Editar Pedido</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
-
-<style>
-  form p {
-    margin-bottom: 15px;
-  }
-
-  form input,
-  form select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-  }
-
-  form label {
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-  }
-</style>
-
-<div class="card shadow" style="width: 500px;">
-  
-  <div class="card-header bg-warning text-dark text-center">
-    <h5 class="mb-0">Editar Pedido</h5>
-  </div>
-
-  <div class="card-body">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-
-      <div class="d-flex justify-content-between mt-3">
-        
-        <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary">
-          ← Volver
+<html lang="es">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Editar Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <style>
+      input[name$="-DELETE"] { display: none !important; }
+      .precio-unit, .subtotal { background-color: #f8f9fa; font-weight: 500; }
+      .campo-bloqueado { background-color: #e9ecef; cursor: not-allowed; }
+    </style>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <span class="material-symbols-outlined align-middle">inventory</span>
+          Gestión de Pedidos
         </a>
-
-        <button type="submit" class="btn btn-primary">
-          Guardar Cambios
-        </button>
-
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="{% url 'listar_pedidos' %}">Pedidos</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'listar_clientes' %}">Clientes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'listar_productos' %}">Productos</a></li>
+            <li class="nav-item ms-2">
+              <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Logout</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </form>
-  </div>
+    </nav>
 
-</div>
+    <div class="container mt-5">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">
+            <span class="material-symbols-outlined align-middle">edit</span>
+            Editar Pedido #{{ pedido.id }}
+          </h5>
+        </div>
+        <div class="card-body">
 
-</body>
+          {% if puede_editar_completo %}
+          <div class="alert alert-success py-2 mb-4 d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined" style="font-size:20px">lock_open</span>
+            Edición completa disponible — menos de 2 horas desde la creación.
+          </div>
+          {% else %}
+          <div class="alert alert-warning py-2 mb-4 d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined" style="font-size:20px">lock</span>
+            Han pasado más de 2 horas. Solo puedes modificar el <strong>estado</strong>.
+          </div>
+          {% endif %}
+
+          <form method="POST" id="formEditar">
+            {% csrf_token %}
+            {% if puede_editar_completo %}
+              {{ formset.management_form }}
+            {% endif %}
+
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <label class="form-label">Cliente</label>
+                {% if puede_editar_completo %}
+                  {{ form.cliente }}
+                  {% if form.cliente.errors %}
+                    <div class="text-danger small">{{ form.cliente.errors }}</div>
+                  {% endif %}
+                {% else %}
+                  <input type="text" class="form-control campo-bloqueado" value="{{ pedido.cliente }}" disabled>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Fecha</label>
+                {% if puede_editar_completo %}
+                  {{ form.fecha_pedido }}
+                  {% if form.fecha_pedido.errors %}
+                    <div class="text-danger small">{{ form.fecha_pedido.errors }}</div>
+                  {% endif %}
+                {% else %}
+                  <input type="text" class="form-control campo-bloqueado" value="{{ pedido.fecha_pedido }}" disabled>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                {% if puede_editar_completo %}
+                  {{ form.estado }}
+                  {% if form.estado.errors %}
+                    <div class="text-danger small">{{ form.estado.errors }}</div>
+                  {% endif %}
+                {% else %}
+                  <select name="estado" class="form-control">
+                    {% for value, label in form.fields.estado.choices %}
+                      <option value="{{ value }}" {% if value == pedido.estado %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                {% endif %}
+              </div>
+            </div>
+
+            <h6 class="mb-3 border-bottom pb-2">
+              <span class="material-symbols-outlined align-middle" style="font-size:18px">shopping_cart</span>
+              Productos del pedido
+            </h6>
+
+            {% if puede_editar_completo %}
+            <table class="table table-bordered align-middle">
+              <thead class="table-dark">
+                <tr>
+                  <th>Producto</th>
+                  <th style="width:120px">Cantidad</th>
+                  <th style="width:130px">Precio unit.</th>
+                  <th style="width:130px">Subtotal</th>
+                  <th style="width:60px">Quitar</th>
+                </tr>
+              </thead>
+              <tbody id="detallesBody">
+                {% for detalle_form in formset %}
+                  {% if detalle_form.instance.pk %}
+                  <tr class="fila-detalle"
+                      data-producto-id="{{ detalle_form.instance.producto_id }}"
+                      data-cantidad-original="{{ detalle_form.instance.cantidad }}"
+                      data-stock-actual="{{ detalle_form.instance.producto.stock }}">
+                    <td>
+                      {{ detalle_form.id }}
+                      {{ detalle_form.DELETE }}
+                      {{ detalle_form.producto }}
+                    </td>
+                    <td>{{ detalle_form.cantidad }}</td>
+                    <td><input type="text" class="form-control precio-unit" readonly value="$0,00"></td>
+                    <td><input type="text" class="form-control subtotal" readonly value="$0,00"></td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-sm btn-danger btnQuitarFila">
+                        <span class="material-symbols-outlined" style="font-size:16px">close</span>
+                      </button>
+                    </td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr class="table-light">
+                  <td colspan="3" class="text-end fw-bold">Total del pedido:</td>
+                  <td><input type="text" id="totalPedido" class="form-control fw-bold" readonly value="$0,00"></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <button type="button" class="btn btn-outline-primary mb-4" id="btnAgregarProducto">
+              <span class="material-symbols-outlined align-middle" style="font-size:18px">add</span>
+              Agregar producto
+            </button>
+
+            {% else %}
+            <table class="table table-bordered align-middle text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio unit.</th>
+                  <th>Cantidad</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for detalle in pedido.detalles.all %}
+                <tr>
+                  <td>{{ detalle.producto.nombre }}</td>
+                  <td>{{ detalle.producto.precio }}</td>
+                  <td>{{ detalle.cantidad }}</td>
+                  <td>{{ detalle.subtotal }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot class="table-light">
+                <tr>
+                  <td colspan="3" class="text-end fw-bold">Total:</td>
+                  <td class="fw-bold">{{ pedido.total }}</td>
+                </tr>
+              </tfoot>
+            </table>
+            {% endif %}
+
+            <div class="d-flex justify-content-between mt-3">
+              <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary">Cancelar</a>
+              <button type="button" class="btn btn-warning" id="btnGuardar">
+                <span class="material-symbols-outlined align-middle" style="font-size:18px">save</span>
+                {% if puede_editar_completo %}Guardar Cambios{% else %}Actualizar Estado{% endif %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      {% if puede_editar_completo %}
+
+      const precios = {
+        {% for producto in productos %}
+        "{{ producto.id }}": parseFloat("{{ producto.precio }}"),
+        {% endfor %}
+      };
+
+      // Leer cantidades originales y stock actual desde data-attributes del HTML
+      const cantidadesOriginales = {};
+      const stocksReales         = {};
+      document.querySelectorAll('#detallesBody tr.fila-detalle').forEach(fila => {
+        const pid         = fila.getAttribute('data-producto-id');
+        const cant        = parseInt(fila.getAttribute('data-cantidad-original')) || 0;
+        const stockActual = parseInt(fila.getAttribute('data-stock-actual'))      || 0;
+        if (pid) {
+          cantidadesOriginales[pid] = cant;
+          // Stock disponible real = stock actual + cantidad original
+          stocksReales[pid]         = stockActual + cant;
+        }
+      });
+
+      // Para productos nuevos que se agreguen (no están en el pedido aún)
+      const stocksNuevos = {
+        {% for producto in productos %}
+        "{{ producto.id }}": {{ producto.stock }},
+        {% endfor %}
+      };
+
+      function formatearPrecio(valor) {
+        if (!valor || valor === 0) return '$0,00';
+        const entero    = Math.floor(valor);
+        const decimales = Math.round((valor - entero) * 100);
+        const enteroFmt = entero.toLocaleString('es-CO').replace(/,/g, '.');
+        return `$${enteroFmt},${String(decimales).padStart(2, '0')}`;
+      }
+
+      function calcularFila(fila) {
+        const select   = fila.querySelector('select');
+        const cantidad = fila.querySelector('input[type="number"]');
+        const precioUn = fila.querySelector('.precio-unit');
+        const subtotal = fila.querySelector('.subtotal');
+        if (!select || !cantidad) return 0;
+        const pid    = select.value;
+        const cant   = parseFloat(cantidad.value) || 0;
+        const precio = precios[pid] || 0;
+        const sub    = precio * cant;
+        if (precioUn) precioUn.value = precio > 0 ? formatearPrecio(precio) : '$0,00';
+        if (subtotal) subtotal.value = sub    > 0 ? formatearPrecio(sub)    : '$0,00';
+        return sub;
+      }
+
+      function calcularTotal() {
+        let total = 0;
+        document.querySelectorAll('#detallesBody tr.fila-detalle').forEach(fila => {
+          if (fila.style.display !== 'none') total += calcularFila(fila);
+        });
+        document.getElementById('totalPedido').value = formatearPrecio(total);
+      }
+
+      document.getElementById('detallesBody').addEventListener('change', function(e) {
+        const fila = e.target.closest('tr.fila-detalle');
+        if (fila) calcularTotal();
+      });
+
+      document.getElementById('detallesBody').addEventListener('click', function(e) {
+        const btn = e.target.closest('.btnQuitarFila');
+        if (!btn) return;
+        const fila = btn.closest('tr.fila-detalle');
+        const chk  = fila.querySelector('input[type="checkbox"]');
+        if (chk) {
+          chk.checked        = true;
+          fila.style.display = 'none';
+        } else {
+          fila.remove();
+        }
+        calcularTotal();
+      });
+
+      document.getElementById('btnAgregarProducto').addEventListener('click', function() {
+        const tbody      = document.getElementById('detallesBody');
+        const totalForms = document.getElementById('id_form-TOTAL_FORMS');
+        const idx        = parseInt(totalForms.value);
+
+        let opciones = '<option value="">— Selecciona un producto —</option>';
+        {% for producto in productos %}
+        const dispNuevo_{{ producto.id }} = (stocksReales["{{ producto.id }}"] !== undefined)
+          ? stocksReales["{{ producto.id }}"]
+          : {{ producto.stock }};
+        opciones += `<option value="{{ producto.id }}">{{ producto.nombre }} — Disponible: ${dispNuevo_{{ producto.id }}}</option>`;
+        {% endfor %}
+
+        const fila = document.createElement('tr');
+        fila.className = 'fila-detalle';
+        fila.setAttribute('data-producto-id', '');
+        fila.setAttribute('data-cantidad-original', '0');
+        fila.setAttribute('data-stock-actual', '0');
+        fila.innerHTML = `
+          <td>
+            <input type="hidden" name="form-${idx}-id" value="">
+            <select name="form-${idx}-producto" class="form-control">${opciones}</select>
+          </td>
+          <td><input type="number" name="form-${idx}-cantidad" class="form-control" min="1" value="1"></td>
+          <td><input type="text" class="form-control precio-unit" readonly value="$0,00"></td>
+          <td><input type="text" class="form-control subtotal" readonly value="$0,00"></td>
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-danger btnQuitarFila">
+              <span class="material-symbols-outlined" style="font-size:16px">close</span>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(fila);
+        totalForms.value = idx + 1;
+        calcularTotal();
+      });
+
+      document.getElementById('btnGuardar').addEventListener('click', function() {
+        const filas    = document.querySelectorAll('#detallesBody tr.fila-detalle');
+        const visibles = Array.from(filas).filter(f => f.style.display !== 'none');
+
+        if (visibles.length === 0) {
+          Swal.fire({
+            title: 'Sin productos',
+            text:  'El pedido debe tener al menos un producto.',
+            icon:  'warning',
+            confirmButtonColor: '#ffc107'
+          });
+          return;
+        }
+
+        let errores = [];
+        visibles.forEach(fila => {
+          const select   = fila.querySelector('select');
+          const cantidad = fila.querySelector('input[type="number"]');
+          if (!select || !select.value || !cantidad) return;
+          const pid           = select.value;
+          const cantNueva     = parseInt(cantidad.value) || 0;
+          // Si es un producto ya en el pedido usa stocksReales, si es nuevo usa stocksNuevos
+          const maxDisponible = stocksReales[pid] !== undefined ? stocksReales[pid] : (stocksNuevos[pid] || 0);
+          const nombre        = select.options[select.selectedIndex]?.text.split('—')[0].trim();
+          const cantOriginal  = cantidadesOriginales[pid] || 0;
+          const stockActual   = maxDisponible - cantOriginal;
+
+          if (cantNueva > maxDisponible) {
+            errores.push(
+              `<b>${nombre}</b>: quieres <b>${cantNueva}</b> pero el máximo es <b>${maxDisponible}</b><br>` +
+              `<small class="text-muted">(stock: ${stockActual} + ${cantOriginal} del pedido actual)</small>`
+            );
+          }
+        });
+
+        if (errores.length > 0) {
+          Swal.fire({
+            title: '⚠ Stock insuficiente',
+            html:  errores.join('<hr>'),
+            icon:  'error',
+            confirmButtonColor: '#dc3545',
+            confirmButtonText:  'Entendido'
+          });
+          return;
+        }
+
+        Swal.fire({
+          title: '¿Guardar cambios?',
+          text:  'Se actualizará el pedido.',
+          icon:  'question',
+          showCancelButton:   true,
+          confirmButtonColor: '#ffc107',
+          cancelButtonColor:  '#6c757d',
+          confirmButtonText:  'Sí, guardar',
+          cancelButtonText:   'Cancelar'
+        }).then(result => {
+          if (result.isConfirmed) document.getElementById('formEditar').submit();
+        });
+      });
+
+      calcularTotal();
+
+      {% else %}
+      // Solo estado — confirmar antes de guardar
+      document.getElementById('btnGuardar').addEventListener('click', function() {
+        const estado      = document.querySelector('select[name="estado"]').value;
+        const esCancelado = estado === 'cancelado';
+        Swal.fire({
+          title: esCancelado ? '⚠ ¿Cancelar pedido?' : '¿Actualizar estado?',
+          html:  esCancelado ? '<b>Esto devolverá el stock y el pedido no podrá editarse más.</b>' : 'Se actualizará el estado del pedido.',
+          icon:  esCancelado ? 'warning' : 'question',
+          showCancelButton:   true,
+          confirmButtonColor: esCancelado ? '#dc3545' : '#ffc107',
+          cancelButtonColor:  '#6c757d',
+          confirmButtonText:  esCancelado ? 'Sí, cancelar pedido' : 'Sí, actualizar',
+          cancelButtonText:   'No, volver'
+        }).then(result => {
+          if (result.isConfirmed) document.getElementById('formEditar').submit();
+        });
+      });
+      {% endif %}
+
+      {% for message in messages %}
+        {% if message.tags == 'error' %}
+        Swal.fire({
+          title: '⚠ Stock insuficiente',
+          html:  '<b>{{ message }}</b>',
+          icon:  'error',
+          confirmButtonColor: '#dc3545',
+          confirmButtonText:  'Entendido'
+        });
+        {% elif message.tags == 'warning' %}
+        Swal.fire({
+          title: '⚠ Stock bajo',
+          text:  '{{ message }}',
+          icon:  'warning',
+          timer: 6000,
+          showConfirmButton: true,
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#ffc107',
+          timerProgressBar: true
+        });
+        {% endif %}
+      {% endfor %}
+    </script>
+  </body>
 </html>

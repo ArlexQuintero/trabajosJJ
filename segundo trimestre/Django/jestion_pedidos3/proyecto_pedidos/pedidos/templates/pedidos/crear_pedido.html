@@ -1,58 +1,388 @@
 <!doctype html>
-<html>
-<head>
-  <title>Crear Pedido</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
-
-<style>
-  form p {
-    margin-bottom: 15px;
-  }
-
-  form input,
-  form select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-  }
-
-  form label {
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-  }
-</style>
-
-<div class="card shadow" style="width: 500px;">
-  
-  <div class="card-header bg-primary text-white text-center">
-    <h5 class="mb-0">Crear Nuevo Pedido</h5>
-  </div>
-
-  <div class="card-body">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-
-      <div class="d-flex justify-content-between mt-3">
-        
-        <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary">
-          ← Volver
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nuevo Pedido</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <style>
+      input[name$="-DELETE"] {
+        display: none !important;
+      }
+      .precio-unit,
+      .subtotal {
+        background-color: #f8f9fa;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <span class="material-symbols-outlined align-middle">inventory</span>
+          Gestión de Pedidos
         </a>
-
-        <button type="submit" class="btn btn-success">
-          Guardar Pedido
-        </button>
-
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listar_pedidos' %}">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listar_clientes' %}"
+                >Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'listar_productos' %}"
+                >Productos</a
+              >
+            </li>
+            <li class="nav-item ms-2">
+              <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
-    </form>
-  </div>
+    </nav>
 
-</div>
+    <div class="container mt-5">
+      <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <span class="material-symbols-outlined align-middle"
+              >add_circle</span
+            >
+            Nuevo Pedido
+          </h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" id="formCrear">
+            {% csrf_token %} {{ formset.management_form }}
 
-</body>
+            <!-- Datos del pedido -->
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <label class="form-label">Cliente</label>
+                {{ form.cliente }} {% if form.cliente.errors %}
+                <div class="text-danger small">{{ form.cliente.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Fecha</label>
+                {{ form.fecha_pedido }} {% if form.fecha_pedido.errors %}
+                <div class="text-danger small">
+                  {{ form.fecha_pedido.errors }}
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                {{ form.estado }} {% if form.estado.errors %}
+                <div class="text-danger small">{{ form.estado.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Productos del pedido -->
+            <h6 class="mb-3 border-bottom pb-2">
+              <span
+                class="material-symbols-outlined align-middle"
+                style="font-size: 18px"
+                >shopping_cart</span
+              >
+              Productos del pedido
+            </h6>
+
+            <table class="table table-bordered align-middle" id="tablaDetalles">
+              <thead class="table-dark">
+                <tr>
+                  <th>Producto</th>
+                  <th style="width: 120px">Cantidad</th>
+                  <th style="width: 130px">Precio unit.</th>
+                  <th style="width: 130px">Subtotal</th>
+                  <th style="width: 60px">Quitar</th>
+                </tr>
+              </thead>
+
+              <!-- ✅ tbody con id correcto -->
+              <tbody id="detallesBody">
+                {% for detalle_form in formset %}
+                <tr class="fila-detalle">
+                  <td>
+                    {{ detalle_form.id }} {{ detalle_form.DELETE }} {{
+                    detalle_form.producto }}
+                  </td>
+                  <td>{{ detalle_form.cantidad }}</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control precio-unit"
+                      readonly
+                      placeholder="$0.00"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control subtotal"
+                      readonly
+                      placeholder="$0.00"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-danger btnQuitarFila"
+                    >
+                      <span
+                        class="material-symbols-outlined"
+                        style="font-size: 16px"
+                        >close</span
+                      >
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+              <tfoot>
+                <tr class="table-light">
+                  <td colspan="3" class="text-end fw-bold">
+                    Total del pedido:
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      id="totalPedido"
+                      class="form-control fw-bold"
+                      readonly
+                      value="$0.00"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary mb-4"
+              id="btnAgregarProducto"
+            >
+              <span
+                class="material-symbols-outlined align-middle"
+                style="font-size: 18px"
+                >add</span
+              >
+              Agregar producto
+            </button>
+
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'listar_pedidos' %}" class="btn btn-secondary"
+                >Cancelar</a
+              >
+              <button type="button" class="btn btn-primary" id="btnGuardar">
+                <span
+                  class="material-symbols-outlined align-middle"
+                  style="font-size: 18px"
+                  >save</span
+                >
+                Guardar Pedido
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+            const precios = {
+              {% for producto in productos %}
+              "{{ producto.id }}": parseFloat("{{ producto.precio }}"),
+              {% endfor %}
+            };
+
+            const stocks = {
+              {% for producto in productos %}
+              "{{ producto.id }}": {{ producto.stock }},
+              {% endfor %}
+            };
+
+            function formatearPrecio(valor) {
+          if (!valor || valor === 0) return '$0,00';
+          const entero    = Math.floor(valor);
+          const decimales = Math.round((valor - entero) * 100);
+          const enteroFmt = entero.toLocaleString('es-CO').replace(/,/g, '.');
+          return `$${enteroFmt},${String(decimales).padStart(2, '0')}`;
+      }
+
+      function calcularFila(fila) {
+          const select   = fila.querySelector('select');
+          const cantidad = fila.querySelector('input[type="number"]');
+          const precioUn = fila.querySelector('.precio-unit');
+          const subtotal = fila.querySelector('.subtotal');
+          if (!select || !cantidad) return 0;
+          const pid    = select.value;
+          const cant   = parseFloat(cantidad.value) || 0;
+          const precio = precios[pid] || 0;
+          const sub    = precio * cant;
+          if (precioUn) precioUn.value = precio > 0 ? formatearPrecio(precio) : '$0,00';
+          if (subtotal) subtotal.value = sub    > 0 ? formatearPrecio(sub)    : '$0,00';
+          return sub;
+      }
+
+      function calcularTotal() {
+          let total = 0;
+          document.querySelectorAll('#detallesBody tr.fila-detalle').forEach(fila => {
+              if (fila.style.display !== 'none') total += calcularFila(fila);
+          });
+          document.getElementById('totalPedido').value = formatearPrecio(total);
+      }
+
+            function calcularTotal() {
+              let total = 0;
+              document.querySelectorAll('#detallesBody tr.fila-detalle').forEach(fila => {
+                if (fila.style.display !== 'none') total += calcularFila(fila);
+              });
+              document.getElementById('totalPedido').value = formatearPrecio(total);
+            }
+
+            document.getElementById('detallesBody').addEventListener('change', function(e) {
+              const fila = e.target.closest('tr.fila-detalle');
+              if (fila) calcularTotal();
+            });
+
+            document.getElementById('detallesBody').addEventListener('click', function(e) {
+              const btn = e.target.closest('.btnQuitarFila');
+              if (!btn) return;
+              const fila = btn.closest('tr.fila-detalle');
+              if (!fila) return;
+              const chk = fila.querySelector('input[type="checkbox"]');
+              if (chk) {
+                chk.checked        = true;
+                fila.style.display = 'none';
+              } else {
+                fila.remove();
+              }
+              calcularTotal();
+            });
+
+            const hoy = new Date().toISOString().split('T')[0];
+            document.querySelector('input[type="date"]').setAttribute('min', hoy);
+
+            document.getElementById('btnAgregarProducto').addEventListener('click', function() {
+              const tbody      = document.getElementById('detallesBody');
+              const totalForms = document.getElementById('id_form-TOTAL_FORMS');
+              if (!totalForms) { alert('Error: management_form no encontrado.'); return; }
+              const idx = parseInt(totalForms.value);
+
+              let opciones = '<option value="">— Selecciona un producto —</option>';
+              {% for producto in productos %}
+              opciones += `<option value="{{ producto.id }}">{{ producto.nombre }} (${{ producto.precio }}) — Stock disponible: {{ producto.stock }}</option>`;
+              {% endfor %}
+
+              const fila = document.createElement('tr');
+              fila.className = 'fila-detalle';
+              fila.innerHTML = `
+                <td>
+                  <input type="hidden" name="form-${idx}-id" value="">
+                  <select name="form-${idx}-producto" class="form-control">${opciones}</select>
+                </td>
+                <td><input type="number" name="form-${idx}-cantidad" class="form-control" min="1" value="1"></td>
+                <td><input type="text" class="form-control precio-unit" readonly value="$0.00"></td>
+                <td><input type="text" class="form-control subtotal" readonly value="$0.00"></td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-danger btnQuitarFila">
+                    <span class="material-symbols-outlined" style="font-size:16px">close</span>
+                  </button>
+                </td>
+              `;
+              tbody.appendChild(fila);
+              totalForms.value = idx + 1;
+              calcularTotal();
+            });
+
+            // ── Guardar — valida stock antes de confirmar ───────────
+            document.getElementById('btnGuardar').addEventListener('click', function() {
+              const filas    = document.querySelectorAll('#detallesBody tr.fila-detalle');
+              const visibles = Array.from(filas).filter(f => f.style.display !== 'none');
+
+              if (visibles.length === 0) {
+                Swal.fire({
+                  title: 'Sin productos',
+                  text:  'Agrega al menos un producto al pedido.',
+                  icon:  'warning',
+                  confirmButtonColor: '#0d6efd'
+                });
+                return;
+              }
+
+              // Validar stock disponible por producto
+              let errores = [];
+              visibles.forEach(fila => {
+                const select   = fila.querySelector('select');
+                const cantidad = fila.querySelector('input[type="number"]');
+                if (!select || !select.value || !cantidad) return;
+                const pid             = select.value;
+                const cant            = parseInt(cantidad.value) || 0;
+                const stockDisponible = stocks[pid] || 0;
+                const nombreProducto  = select.options[select.selectedIndex]?.text.split('(')[0].trim();
+                if (cant > stockDisponible) {
+                  errores.push(`<b>${nombreProducto}</b>: pediste ${cant} pero solo hay <b>${stockDisponible}</b> disponibles.`);
+                }
+              });
+
+              if (errores.length > 0) {
+                Swal.fire({
+                  title: '⚠ Stock insuficiente',
+                  html:  errores.join('<br><br>'),
+                  icon:  'error',
+                  confirmButtonColor: '#dc3545',
+                  confirmButtonText:  'Entendido'
+                });
+                return;
+              }
+
+              // Sin errores — confirmar y guardar
+              Swal.fire({
+                title: '¿Guardar pedido?',
+                text:  'Se registrará el nuevo pedido.',
+                icon:  'question',
+                showCancelButton:   true,
+                confirmButtonColor: '#0d6efd',
+                cancelButtonColor:  '#6c757d',
+                confirmButtonText:  'Sí, guardar',
+                cancelButtonText:   'Cancelar'
+              }).then(result => {
+                if (result.isConfirmed) document.getElementById('formCrear').submit();
+              });
+            });
+
+            // ── Alertas de error del servidor ──────────────────────
+            {% for message in messages %}
+              {% if message.tags == 'error' %}
+              Swal.fire({
+                title: '⚠ Stock insuficiente',
+                html:  '<b>{{ message }}</b>',
+                icon:  'error',
+                confirmButtonColor: '#dc3545',
+                confirmButtonText:  'Entendido'
+              });
+              {% endif %}
+            {% endfor %}
+
+            calcularTotal();
+    </script>
+  </body>
 </html>
